@@ -1,161 +1,222 @@
 const questions = [
-  {
-    question: "What is the capital of India?",
-    options: ["Mumbai", "New Delhi", "Kolkata", "Chennai"],
-    answer: "New Delhi"
-  },
-  {
-    question: "Which planet is known as the Red Planet?",
-    options: ["Earth", "Mars", "Jupiter", "Venus"],
-    answer: "Mars"
-  },
-  {
-    question: "Who is known as the Father of the Nation in India?",
-    options: [
-      "Jawaharlal Nehru",
-      "Subhas Chandra Bose",
-      "Mahatma Gandhi",
-      "Bhagat Singh"
-    ],
-    answer: "Mahatma Gandhi"
-  },
-  {
-    question: "Which is the largest ocean in the world?",
-    options: [
-      "Atlantic Ocean",
-      "Indian Ocean",
-      "Pacific Ocean",
-      "Arctic Ocean"
-    ],
-    answer: "Pacific Ocean"
-  },
-  {
-    question: "How many continents are there on Earth?",
-    options: ["5", "6", "7", "8"],
-    answer: "7"
-  },
-  {
-    question: "Which is the national animal of India?",
-    options: ["Lion", "Tiger", "Elephant", "Leopard"],
-    answer: "Tiger"
-  },
-  {
-    question: "Which is the longest river in the world?",
-    options: [
-      "Amazon River",
-      "Nile River",
-      "Ganga River",
-      "Yangtze River"
-    ],
-    answer: "Nile River"
-  },
-  {
-    question: "Who invented the telephone?",
-    options: [
-      "Thomas Edison",
-      "Alexander Graham Bell",
-      "Nikola Tesla",
-      "Isaac Newton"
-    ],
-    answer: "Alexander Graham Bell"
-  },
-  {
-    question: "Which country is known as the Land of the Rising Sun?",
-    options: ["China", "South Korea", "Japan", "Thailand"],
-    answer: "Japan"
-  },
-  {
-    question: "What is the largest mammal in the world?",
-    options: [
-      "African Elephant",
-      "Blue Whale",
-      "Giraffe",
-      "Hippopotamus"
-    ],
-    answer: "Blue Whale"
-  }
+    {
+        question: "What is the capital of India?",
+        options: ["Mumbai", "New Delhi", "Kolkata", "Chennai"],
+        answer: 1, isSubmitted: false,
+        selcOpIndex: null
+
+    },
+    {
+        question: "Which planet is known as the Red Planet?",
+        options: ["Earth", "Mars", "Jupiter", "Venus"],
+        answer: 1, isSubmitted: false,
+        selcOpIndex: null
+    },
+    {
+        question: "Who is known as the Father of the Nation in India?",
+        options: [
+            "Jawaharlal Nehru",
+            "Subhas Chandra Bose",
+            "Mahatma Gandhi",
+            "Bhagat Singh"
+        ],
+        answer: 2, isSubmitted: false,
+        selcOpIndex: null
+    },
+    {
+        question: "Which is the largest ocean in the world?",
+        options: [
+            "Atlantic Ocean",
+            "Indian Ocean",
+            "Pacific Ocean",
+            "Arctic Ocean"
+        ],
+        answer: 2, isSubmitted: false,
+        selcOpIndex: null
+    },
+    {
+        question: "How many continents are there on Earth?",
+        options: ["5", "6", "7", "8"],
+        answer: 2, isSubmitted: false,
+        selcOpIndex: null
+    },
+    {
+        question: "Which is the national animal of India?",
+        options: ["Lion", "Tiger", "Elephant", "Leopard"],
+        answer: 1, isSubmitted: false,
+        selcOpIndex: null
+    },
+    {
+        question: "Which is the longest river in the world?",
+        options: [
+            "Amazon River",
+            "Nile River",
+            "Ganga River",
+            "Yangtze River"
+        ],
+        answer: 1, isSubmitted: false,
+        selcOpIndex: null
+    },
+    {
+        question: "Who invented the telephone?",
+        options: [
+            "Thomas Edison",
+            "Alexander Graham Bell",
+            "Nikola Tesla",
+            "Isaac Newton"
+        ],
+        answer: 1, isSubmitted: false,
+        selcOpIndex: null
+    },
+    {
+        question: "Which country is known as the Land of the Rising Sun?",
+        options: ["China", "South Korea", "Japan", "Thailand"],
+        answer: 2, isSubmitted: false,
+        selcOpIndex: null
+    },
+    {
+        question: "What is the largest mammal in the world?",
+        options: [
+            "African Elephant",
+            "Blue Whale",
+            "Giraffe",
+            "Hippopotamus"
+        ],
+        answer: 1, isSubmitted: false,
+        selcOpIndex: null
+    }
 ];
 
-// Selectors------------------------------------- 
-const quesUi = document.querySelector("#que")
-const quizSec = document.querySelector("#quiz-section")
-const options = document.querySelector("#options")
+const scoreElemet = document.querySelector("#score")
+const progress = document.querySelector("#progress")
+const queNum = document.querySelector("#questionNo")
+const queText = document.querySelector("#questionText")
+const queOptions = document.querySelectorAll(".option")
 
+const nextBtn = document.querySelector("#nextBtn")
+const previewBtn = document.querySelector("#prevBtn")
 let currentQuestion = 0
 let score = 0
-// functions------------------------------------- 
 function renderUi() {
-  quizSec.innerHTML = ""
-  quizSec.innerHTML += `
-            <div class="top-bar">
-                <div id="score">Score : ${score}</div>
-                <div id="progress">Question ${currentQuestion + 1} / 10</div>
-            </div>
+    scoreElemet.textContent = `Score : ${score}`
+    progress.textContent = `Question  ${currentQuestion + 1} / ${questions.length}`
+    queNum.textContent = `${currentQuestion + 1}.`
+    queText.textContent = `${questions[currentQuestion].question}`
 
-            <div id="que">
-                <span id="questionNo">${currentQuestion + 1}.</span>
-                <span id="questionText">
-                    ${questions[currentQuestion].question}
-                </span>
-            </div>
+    queOptions.forEach((op, index) => {
+        op.textContent = `${questions[currentQuestion].options[index]}`
 
-            <div id="options">
-                <button class="option">${questions[currentQuestion].options[0]}</button>
-                <button class="option">${questions[currentQuestion].options[1]}</button>
-                <button class="option">${questions[currentQuestion].options[2]}</button>
-                <button class="option">${questions[currentQuestion].options[3]}</button>
-            </div>
-               
-            
-            <div class="btns">
-                <button id="prevBtn">Previous</button>
-                <button id="nextBtn">Next</button>
-            </div>
+    })
 
-            <div id="result">
-                Your Score : 0 / 10
-            </div>
-                `
-    buttons()
-    allOption()
+    //next,prev Ui logic------------------
+    if (currentQuestion === questions.length - 1) {
+
+        nextBtn.disabled = true
+        nextBtn.style.color = "gray"
+    }
+    else {
+        nextBtn.disabled = false
+        nextBtn.style.color = "black"
+    }
+
+    if (currentQuestion === 0) {
+        previewBtn.disabled = true
+        previewBtn.style.color = "gray"
+    } else {
+        previewBtn.disabled = false
+        previewBtn.style.color = "black"
+
+    }
+
+    //optionUi logic----------------------------
+    queOptions.forEach((op) => {
+        op.classList.remove("selected", "green", "red");
+    })
+
+    let selected = questions[currentQuestion].selcOpIndex;
+    if (selected !== null) {
+        queOptions[selected].classList.add("selected")
+        
+    }
+
+    if (questions[currentQuestion].isSubmitted === true) {
+        let ans = questions[currentQuestion].answer
+        if (selected === ans) {
+            queOptions[selected].classList.add("green")
+        } else {
+            queOptions[selected].classList.add("red")
+            queOptions[ans].classList.add("green")
+        }
+        queOptions[selected].classList.remove("selected")
+    }
 }
+
 renderUi()
 
 function buttons() {
-  //buttons-----------------------------------------
-  const nextButton = document.querySelector("#nextBtn")
-  const prevButton = document.querySelector("#prevBtn")
 
-  //nextButton------------------------ 
-  if (currentQuestion !== questions.length - 1) {
-    nextButton.addEventListener("click", (e) => {
-      currentQuestion++
-      renderUi()
+    nextBtn.addEventListener("click", () => {
+        if (currentQuestion < questions.length - 1) {
+            currentQuestion++
+
+            renderUi()
+            return
+        }
 
     })
-  }
-  else {
-    nextButton.disabled = true
-    nextButton.style.color = "gray"
-  }
+    previewBtn.addEventListener("click", () => {
+        if (currentQuestion !== 0) {
+            currentQuestion--
 
-  //prevButton------------------------ 
-  if (currentQuestion !== 0) {
-    prevButton.addEventListener("click", (e) => {
-      currentQuestion--
-      renderUi()
-    })
-  } else {
-    prevButton.disabled = true
-    prevButton.style.color = "gray"
-  }
+            renderUi()
+            return
+        }
 
-
-}
-
-function allOption(){
-     const options = document.querySelectorAll(".option")
-    options.forEach((option)=>{
-      
     })
 }
+buttons()
+
+
+function allOp() {
+    const subBtn = document.querySelector("#submitBtn")
+    queOptions.forEach((op, index) => {
+
+        op.addEventListener("click", () => {
+            if (questions[currentQuestion].isSubmitted) {
+                return
+            }
+            questions[currentQuestion].selcOpIndex = index;
+
+            queOptions.forEach((ops) => {
+                ops.classList.remove("selected")
+            })
+            op.classList.add("selected")
+
+        })
+    })
+
+    subBtn.addEventListener("click", () => {
+        let selected = questions[currentQuestion].selcOpIndex;
+        if (questions[currentQuestion].isSubmitted) {
+            return;
+        }
+
+        if (selected === null) {
+            alert("Please select an option");
+            return;
+        }
+        let ans = questions[currentQuestion].answer
+        if (selected === ans) {
+            queOptions[selected].classList.add("green")
+            score++
+            scoreElemet.textContent = `Score : ${score}`
+        } else if (selected !== ans) {
+            queOptions[selected].classList.add("red")
+            queOptions[ans].classList.add("green")
+
+        }
+        questions[currentQuestion].isSubmitted = true;
+    })
+
+}
+allOp()
